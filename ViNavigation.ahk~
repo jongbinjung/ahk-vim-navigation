@@ -3,8 +3,8 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; HotKey to Initiate VI-mode with Double-tap of Alt
-~Shift::
-If (A_PriorHotKey = "~Shift" AND A_TimeSincePriorHotKey < 200)
+Shift::
+If (A_PriorHotKey = "Shift" AND A_TimeSincePriorHotKey < 200)
 {
 ; Set the flags for OSD
 Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
@@ -15,7 +15,7 @@ Gui, 99:Add, Text, cAA0000, VIM-Mode Activated (Esc to Exit Vim-Mode)
 Gui, 99:Color, 000000
 Gui, 99:Show,NoActivate xCenter y10, VIM-Mode Activated
 }
-Send, {~ShiftUp}
+Send, {ShiftUp}
 Return
 
 #IfWinExist VIM-Mode Activated
