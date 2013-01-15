@@ -126,6 +126,9 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 
+# Binary
+*.exe
+
 
 #############
 ## Python
@@ -161,3 +164,10 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+##########
+# VIM
+##########
+
+# Swap files
+*.*~
