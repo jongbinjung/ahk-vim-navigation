@@ -5,6 +5,11 @@
 ; Written by Rich Alesi
 ; and Modified for AHK_L by Andrej Mitrovic
 ; (http://www.autohotkey.com/board/topic/41206-modal-vim/)
+; 
+; Update (08/16/2014)
+; Simplified script to take modifiers into account
+; (see, http://www.autohotkey.com/board/topic/83755
+; -using-an-arbitrary-key-as-a-modifier-without-sacrificing-it/)
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -13,7 +18,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; Global variables
 inputNumber := " "
 
-; Notification GUI
+; Notification GUI {{{
 notify(text, time = 2000)
 {
     #IfWinExist VIM-Mode commands
@@ -30,25 +35,25 @@ notify(text, time = 2000)
     Sleep, %time%
     Gui, 90:Destroy
     return
-}
+} ;}}}
 
-; HotKey to Initiate VI-mode with Double-tap of Alt
+; HotKey to Initiate VI-mode with Double-tap of Alt {{{
 Shift::
     If (A_PriorHotKey = "Shift" AND A_TimeSincePriorHotKey < 500)
     {
         ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
         ; Add and set the OSD Text
-        Gui, 99:Font, s12 bold
-        Gui, 99:Add, Text, cAA0000, VIM-Mode Activated (Esc to Exit Vim-Mode)
+        Gui, 99:Font, s15 bold
+        Gui, 99:Add, Text, cAA0000, VI-Mode Activated (Esc to Exit)
         ; OSD Background Color (Black)
         Gui, 99:Color, 000000
-        Gui, 99:Show,NoActivate xCenter y10, VIM-Mode Activated
+        Gui, 99:Show,NoActivate x0 y10, VIM-Mode Activated
     }
     Send, {ShiftUp}
-Return
+Return ; }}}
 
-#IfWinExist VIM-Mode Activated
+#IfWinExist VIM-Mode Activated ; {{{
 
     ; ESC ends VIM-mode
     ESC:: 
@@ -323,36 +328,46 @@ Return
        return
     }
         
-#IfWinExist
+#IfWinExist ;}}}
+
+
+; Use 's' as a modifier to activate simple vi keybindings
+; (inspired by Simple Vi Mode v2 of Karabiner for Mac)
+
+; send explicitly when no other key is pressed before release
+*Space::Send {Blind}{Space}
+ ; KeyDown:=A_TickCount
+ ; KeyWait Space
+ ; if (A_TickCount-KeyDown < 400)
+     ; Send {Space}
+ ; Return
+
+#If GetKeyState("Space", "p")
 
 ; cursor movements
- !h:: SendInput {Left Down}
- !j:: SendInput {Down Down}
- !k:: SendInput {Up Down}
- !l:: SendInput {Right Down}
+ h::left 
+ j::down 
+ k::up 
+ l::right 
 
 ; page movements
- !w:: SendInput ^{Right}
- !b:: SendInput ^{Left}
- !x:: SendInput {Delete}
- !0:: SendInput {Home}
- !-:: SendInput {End}
+ w::^right
+ b::^left 
+ x::delete 
+ 0::home 
+ -::end 
+ $::end 
 
-; selection movements with Shift
- +!h:: SendInput +{Left Down}
- +!j:: SendInput +{Down Down}
- +!k:: SendInput +{Up Down}
- +!l:: SendInput +{Right Down}
- +!w:: SendInput +^{Right}
- +!b:: SendInput +^{Left}
- +!x:: SendInput +{Delete}
- !):: SendInput +{Home}
- !_:: SendInput +{End}
 
 ; HotKey to VIM maps
- !u:: SendInput ^z
+ u:: SendInput ^z
 
-; Validate the inputNumber and make sure that it's less than 500
+; Change file name
+ i:: SendInput {F2}
+
+#If
+
+; Validate the inputNumber and make sure that it's less than 500 {{{
 normalize(resetNumber)
 {
     global inputNumber
@@ -360,7 +375,7 @@ normalize(resetNumber)
     {
         inputNumber := resetNumber
     }
-}
+} ;}}}
 
 ; Reset the inputNumber to " "
 resetInputNumber()
