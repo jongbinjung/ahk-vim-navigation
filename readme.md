@@ -13,20 +13,20 @@ Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 
 # Commands
 ## regular movements
-hjkl: cursor movements
-w: move to next word
-b: move to previous word
+- hjkl: cursor movements
+- w: move to next word
+- b: move to previous word
 
-0: go to beginning of line
--: go to end of line (this is just how I use it personally in VIM)
-$: go to end of line (for general compatibility... :D)
+- 0: go to beginning of line
+- -: go to end of line (this is just how I use it personally in VIM)
+- $: go to end of line (for general compatibility... :D)
 
 # editting commands
-y: Copy
-d: Cut
-p: Paste
+- y: Copy
+- d: Cut
+- p: Paste
 
-u: undo (Ctrl+z)
+- u: undo (Ctrl+z)
     
 ... and more to come! ;)
 
