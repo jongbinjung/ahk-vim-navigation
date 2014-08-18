@@ -37,9 +37,9 @@ notify(text, time = 2000)
     return
 } ;}}}
 
-; HotKey to Initiate VI-mode with Double-tap of Alt {{{
-Shift::
-    If (A_PriorHotKey = "Shift" AND A_TimeSincePriorHotKey < 500)
+; HotKey to Initiate VI-mode with Double-tap of Tab {{{
+Tab::
+    If (A_PriorHotKey = "Tab" AND A_TimeSincePriorHotKey < 500)
     {
         ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
@@ -50,7 +50,7 @@ Shift::
         Gui, 99:Color, 000000
         Gui, 99:Show,NoActivate x0 y10, VIM-Mode Activated
     }
-    Send, {ShiftUp}
+    Send, {TabUp}
 Return ; }}}
 
 #IfWinExist VIM-Mode Activated ; {{{
@@ -334,8 +334,9 @@ Return ; }}}
 ; Use 's' as a modifier to activate simple vi keybindings
 ; (inspired by Simple Vi Mode v2 of Karabiner for Mac)
 
+Space & F1::Return
 ; send explicitly when no other key is pressed before release
-*Space::Send {Blind}{Space}
+*Space::SendInput {Blind}{Space}
  ; KeyDown:=A_TickCount
  ; KeyWait Space
  ; if (A_TickCount-KeyDown < 400)
