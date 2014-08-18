@@ -6,8 +6,8 @@ Written by: Jongbin Jung (olorin86 at gmail dot com)
 Created on December 15, 2012
 
 # Introduction
-Activate VIM-Mode (Normal Mode) by double-tapping either Shift key.
-Deactivate VIM-Mode by pressing Esc key
+Activate Vi Mode (Normal Mode) by double-tapping either Tab key.
+Deactivate Vi Mode by pressing Esc key
 
 Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 
@@ -25,7 +25,6 @@ Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 - y: Copy
 - d: Cut
 - p: Paste
-
 - u: undo (Ctrl+z)
     
 ... and more to come! ;)
@@ -33,3 +32,5 @@ Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 # Change Logs
 ## 08/17/2014
 - Changed ad-hoc navigation modifier to Space
+- ad-hoc navigation works with all modifiers
+- Changed hotkey for Vi-mode to double Tab (instead of Shift)
