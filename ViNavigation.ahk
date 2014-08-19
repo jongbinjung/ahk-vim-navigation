@@ -37,10 +37,10 @@ notify(text, time = 2000)
     return
 } ;}}}
 
-; HotKey to Initiate VI-mode with Double-tap of Tab {{{
-Tab::
-    If (A_PriorHotKey = "Tab" AND A_TimeSincePriorHotKey < 500)
-    {
+; HotKey to Initiate VI-mode with Double-tap of Esc {{{
+$Esc::
+    If (A_PriorHotKey = "Esc" AND A_TimeSincePriorHotKey < 500)
+    {                                
         ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
         ; Add and set the OSD Text
@@ -50,7 +50,10 @@ Tab::
         Gui, 99:Color, 000000
         Gui, 99:Show,NoActivate x0 y10, VIM-Mode Activated
     }
-    Send, {TabUp}
+    Else
+    {
+    Send {Esc}
+    }
 Return ; }}}
 
 #IfWinExist VIM-Mode Activated ; {{{

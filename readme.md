@@ -6,8 +6,8 @@ Written by: Jongbin Jung (olorin86 at gmail dot com)
 Created on December 15, 2012
 
 # Introduction
-Activate Vi Mode (Normal Mode) by double-tapping either Tab key.
-Deactivate Vi Mode by pressing Esc key
+Activate Vi Mode (Normal Mode) by double-tapping the Esc key.
+Deactivate Vi Mode by pressing Esc key again.
 
 Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 
@@ -33,4 +33,4 @@ Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 ## 08/17/2014
 - Changed ad-hoc navigation modifier to Space
 - ad-hoc navigation works with all modifiers
-- Changed hotkey for Vi-mode to double Tab (instead of Shift)
+- Changed hotkey for Vi-mode to double Esc (instead of Shift)
