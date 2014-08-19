@@ -39,7 +39,7 @@ notify(text, time = 2000)
 
 ; HotKey to Initiate VI-mode with Double-tap of Esc {{{
 $Esc::
-    If (A_PriorHotKey = "Esc" AND A_TimeSincePriorHotKey < 500)
+    If (A_PriorHotKey = "$Esc" AND A_TimeSincePriorHotKey < 500)
     {                                
         ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
@@ -52,7 +52,7 @@ $Esc::
     }
     Else
     {
-    Send {Esc}
+        SendInput {Esc}
     }
 Return ; }}}
 
@@ -333,8 +333,8 @@ Return ; }}}
         
 #IfWinExist ;}}}
 
-
-; Use 's' as a modifier to activate simple vi keybindings
+;;; Ad-hoc Vi navigation with Space + key combo {{{
+; Use 'Space' as a modifier to activate simple vi keybindings
 ; (inspired by Simple Vi Mode v2 of Karabiner for Mac)
 
 Space & F1::Return
@@ -370,6 +370,8 @@ Space & F1::Return
  i:: SendInput {F2}
 
 #If
+
+; }}}
 
 ; Validate the inputNumber and make sure that it's less than 500 {{{
 normalize(resetNumber)
