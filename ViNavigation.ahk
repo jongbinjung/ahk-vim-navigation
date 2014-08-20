@@ -250,6 +250,14 @@ Return ; }}}
         return
     }
 
+    ; Search with /
+    /::
+    {
+        SendInput ^f
+        resetInputNumber()
+        return
+    }
+
     ; HotKey to VIM maps
     u:: 
     {
