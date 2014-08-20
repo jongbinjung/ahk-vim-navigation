@@ -26,10 +26,14 @@ Simple navigations (hjkl, wb) can be acheived using a Space + key combo.
 - d: Cut
 - p: Paste
 - u: undo (Ctrl+z)
+
+- /: Search (Ctrl+f)
     
 ... and more to come! ;)
 
 # Change Logs
+## 08/20/2014
+- Add hotkey for search (Ctrl+f)
 ## 08/17/2014
 - Changed ad-hoc navigation modifier to Space
 - ad-hoc navigation works with all modifiers
