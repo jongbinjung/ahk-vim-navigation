@@ -341,20 +341,18 @@ Return ; }}}
         
 #IfWinExist ;}}}
 
-;;; Ad-hoc Vi navigation with Space + key combo {{{
-; Use 'Space' as a modifier to activate simple vi keybindings
-; (inspired by Simple Vi Mode v2 of Karabiner for Mac)
+;;; Ad-hoc Vi navigation with / + key combo {{{
 
-Space & F1::Return
+; / & F1::Return
 ; send explicitly when no other key is pressed before release
-*Space::SendInput {Blind}{Space}
- ; KeyDown:=A_TickCount
- ; KeyWait Space
- ; if (A_TickCount-KeyDown < 400)
-     ; Send {Space}
- ; Return
+*/:: SendInput {Blind}{/}
+  KeyDown:=A_TickCount
+  KeyWait /
+  if (A_TickCount-KeyDown < 1000)
+     Send {/}
+  Return
 
-#If GetKeyState("Space", "p")
+#If GetKeyState("/", "p")
 
 ; cursor movements
  h::left 
@@ -393,7 +391,7 @@ normalize(resetNumber)
 
 ; Reset the inputNumber to " "
 resetInputNumber()
-{
+{              
    global
    resetGUI()
    inputNumber := " "
