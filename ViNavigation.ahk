@@ -341,18 +341,18 @@ Return ; }}}
         
 #IfWinExist ;}}}
 
-;;; Ad-hoc Vi navigation with / + key combo {{{
+;;; Ad-hoc Vi navigation with Space + key combo {{{
 
-; / & F1::Return
+Space & F1::Return
 ; send explicitly when no other key is pressed before release
-*/:: SendInput {Blind}{/}
-  KeyDown:=A_TickCount
-  KeyWait /
-  if (A_TickCount-KeyDown < 1000)
-     Send {/}
-  Return
+*Space:: SendInput {Blind}{Space}
+;  KeyDown:=A_TickCount
+;  KeyWait /
+;  if (A_TickCount-KeyDown < 1000)
+;     Send {Space}
+;  Return
 
-#If GetKeyState("/", "p")
+#If GetKeyState("Space", "p")
 
 ; cursor movements
  h::left 
