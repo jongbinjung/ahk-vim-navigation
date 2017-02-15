@@ -17,6 +17,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; Global variables
 inputNumber := " "
+lastCommand = {ShiftDown}{ShiftUp}
 
 ; Notification GUI {{{
 notify(text, time = 2000)
@@ -40,12 +41,12 @@ notify(text, time = 2000)
 ; HotKey to Initiate VI-mode with Double-tap of Esc {{{
 $Esc::
     If (A_PriorHotKey = "$Esc" AND A_TimeSincePriorHotKey < 500)
-    {                                
+    {
         ; Set the flags for OSD
         Gui, 99:+AlwaysOnTop -Caption +ToolWindow +Disabled -SysMenu +Owner
         ; Add and set the OSD Text
         Gui, 99:Font, s15 bold
-        Gui, 99:Add, Text, cAA0000, VI-Mode Activated (Esc to Exit)
+        Gui, 99:Add, Text, cAA0000, VI-NORMAL (Esc to Exit)
         ; OSD Background Color (Black)
         Gui, 99:Color, 000000
         Gui, 99:Show,NoActivate x0 y10, VIM-Mode Activated
@@ -81,7 +82,7 @@ Return ; }}}
     }
 
     ; Other input modes ...
-    +i:: 
+    +i::
     {
         SendInput {Home}
         endVIM()
@@ -101,25 +102,25 @@ Return ; }}}
     }
 
     ; cursor movements
-    h:: 
+    h::
     {
         SendInput {Left %inputNumber%}
         resetInputNumber()
         return
     }
-    j:: 
+    j::
     {
         SendInput {Down %inputNumber%}
         resetInputNumber()
         return
     }
-    k:: 
+    k::
     {
         SendInput {Up %inputNumber%}
         resetInputNumber()
         return
     }
-    l:: 
+    l::
     {
         SendInput {Right %inputNumber%}
         resetInputNumber()
@@ -127,21 +128,36 @@ Return ; }}}
     }
 
     ; page movements
-    w:: 
+    w::
     {
         SendInput ^{Right %inputNumber%}
         resetInputNumber()
         return
     }
-    b:: 
+    b::
     {
         SendInput ^{Left %inputNumber%}
         resetInputNumber()
         return
     }
-    x:: 
+    x::
     {
-        SendInput {Delete %inputNumber%}
+        lastCommand = {Delete %inputNumber%}
+        SendInput, %lastCommand%
+        resetInputNumber()
+        return
+    }
+    >::
+    {
+        lastCommand = {ShiftDown}{LeftArrow}{LeftArrow}{RightArrow}{ShiftUp}{Tab}{Esc}
+        SendInput, %lastCommand%
+        resetInputNumber()
+        return
+    }
+    <::
+    {
+        lastCommand = {ShiftDown}{LeftArrow}{LeftArrow}{RightArrow}{ShiftUp}{ShiftDown}{Tab}{ShiftUp}{Esc}
+        SendInput, %lastCommand%
         resetInputNumber()
         return
     }
@@ -161,33 +177,41 @@ Return ; }}}
             return
         }
     }
-    -:: 
+    -::
     {
         SendInput {End}
         resetInputNumber()
         return
     }
-    $:: 
+    $::
     {
         SendInput {End}
         resetInputNumber()
         return
     }
 
+    ; repeat
+    .::
+    {
+        SendInput, %lastCommand%
+        resetInputNumber()
+        return
+    }
+
     ; selection movements with Shift
-    +h:: 
+    +h::
     {
         SendInput +{Left %inputNumber%}
         resetInputNumber()
         return
     }
-    +j:: 
+    +j::
     {
         SendInput +{Down %inputNumber%}
         resetInputNumber()
         return
     }
-    +k:: 
+    +k::
     {
         SendInput +{Up %inputNumber%}
         resetInputNumber()
@@ -199,31 +223,32 @@ Return ; }}}
         resetInputNumber()
         return
     }
-    +w:: 
+    +w::
     {
         SendInput +^{Right %inputNumber%}
         resetInputNumber()
         return
     }
-    +b:: 
+    +b::
     {
         SendInput +^{Left %inputNumber%}
         resetInputNumber()
         return
     }
-    +x:: 
+    +x::
     {
-        SendInput +{Delete}
+        lastCommand = +{Delete}
+        SendInput, %lastCommand%
         resetInputNumber()
         return
     }
-    ):: 
+    )::
     {
         SendInput +{Home}
         resetInputNumber()
         return
     }
-    _:: 
+    _::
     {
         SendInput +{End}
         resetInputNumber()
@@ -231,21 +256,22 @@ Return ; }}}
     }
 
     ; Copy (Yank) / Cut (Delete) / Paste (Put)
-    y:: 
+    y::
     {
         SendInput ^c
         resetInputNumber()
         return
     }
-    p:: 
+    p::
     {
         SendInput ^v
         resetInputNumber()
         return
     }
-    d:: 
+    d::
     {
-        SendInput ^x
+        lastCommand = ^x
+        SendInput, %lastCommand%
         resetInputNumber()
         return
     }
@@ -362,11 +388,11 @@ Space & F1::Return
 
 ; page movements
  w::^right
- b::^left 
- x::delete 
- 0::home 
- -::end 
- $::end 
+ b::^left
+ x::delete
+ 0::home
+ -::end
+ $::end
 
 
 ; HotKey to VIM maps
